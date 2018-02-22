@@ -28,5 +28,33 @@ namespace HotTipster.Utilities
 			}
 			return File.Exists(filepath);
 		}
+
+		public static List<T> AddItemToList<T>(object item, List<T> list)
+		{
+			try
+			{
+				list.Add((T)Convert.ChangeType(item, typeof(T)));
+			}
+			catch
+			{
+				throw new InvalidCastException("Cannot add item to list - invalid type");
+			}
+
+			return list;
+		}
+
+		public static List<T> AddItemsToList<T>(List<T> items, List<T> list)
+		{
+			try
+			{
+				list.AddRange(items);
+			}
+			catch
+			{
+				throw new InvalidCastException("Cannot add items to list - invalid type");
+			}
+
+			return list;
+		}
 	}
 }
