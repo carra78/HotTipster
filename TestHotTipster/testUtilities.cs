@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HotTipster.Utilities;
 using HotTipster;
 using System.Collections.Generic;
+using System.IO;
 
 namespace TestHotTipster
 {
@@ -40,6 +41,19 @@ namespace TestHotTipster
 			bool result = MyUtilities.ValidFilePath(filepath);
 			Assert.IsFalse(result);
 		}
+
+		[TestMethod]
+		public void testDBExistsInvalidPath()
+		{
+			string filepath = Directory.GetCurrentDirectory() + Path.PathSeparator + "HotTipsterDatabase.sqlite";
+			bool result = MyUtilities.ValidFilePath(filepath);
+			Assert.IsFalse(result);
+		}
+
+
+
+
+
 
 		[TestMethod]
 		public void testAddItemToList()
