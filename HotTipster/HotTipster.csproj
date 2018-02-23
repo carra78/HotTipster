@@ -80,6 +80,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="HistoricData\HorseBetDataReader.cs" />
+    <Compile Include="HorseBets\RaceCourse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\MyUtilities.cs" />

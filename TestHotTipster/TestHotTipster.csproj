@@ -70,13 +70,16 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="testDataWriterSqlite.cs" />
     <Compile Include="testHistoricDataInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="testUtilities.cs" />
     <Compile Include="testDataInputInvalidFile.cs" />
     <Compile Include="testHorseBet.cs" />
+    <Compile Include="testRaceCourse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

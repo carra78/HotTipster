@@ -62,5 +62,16 @@ namespace HotTipster.HistoricData
 			
 			return result;
 		}
+		public string[] ExistingRaceCourseNames()
+		{
+			HorseBetDataReader myReader = new HorseBetDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
+			//myReader.FilePath = @"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt";
+			List<HorseBet> historicBets = myReader.ListOfHorseBets();
+			var names = historicBets.GroupBy(x => x.RaceCourseName).Select(y => y.First().ToString()).ToArray();
+
+			return names;
+			
+		}
+
 	}
 }
