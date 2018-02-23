@@ -10,10 +10,10 @@ using Microsoft.Data.Sqlite;
 
 namespace HotTipster.DataWriter
 {
-	class WriteToSQLite : IDataWriter
+	public class WriteToSQLite : IDataWriter
 	{
-		private static string databaseName = "HotTipsterDataBase";
-		SQLiteConnection dbConnection = new SQLiteConnection("Data Source=" + databaseName +";Version=3;New=True;Compression=True;");
+		private static string databaseName = "HotTipster.db";
+		SqliteConnection dbConnection = new SqliteConnection(string.Format("Filename={0}", databaseName));
 		
 
 		public void WriteData()
@@ -24,12 +24,28 @@ namespace HotTipster.DataWriter
 		public bool CheckDatabaseExists()
 		{
 
-			return MyUtilities.ValidFilePath(Directory.GetCurrentDirectory() + Path.PathSeparator + databaseName + ".sqlite");
+			return MyUtilities.ValidFilePath(Directory.GetCurrentDirectory() + Path.PathSeparator + databaseName);
 		}
 
 		public void CreateDatabase()
 		{
+			using (dbConnection)
+			{
+				string tablecommand = "CREATE TABLE IF NOT EXISTS Horses" +
+					"(HorseID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+					"HorseName NVARCHAR(150) NOT NULL)";
+				SqliteCommand createTable = new SqliteCommand(tablecommand, dbConnection);
+				try
+				{
+					dbConnection.Open();
+					createTable.ExecuteNonQuery();
+				}
+				catch (Exception)
+				{
 
+					throw;
+				}
+			}
 		}
 
 	}
