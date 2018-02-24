@@ -40,14 +40,22 @@ namespace TestHotTipster
 		[TestMethod]
 		public void check18RaceCourseNamesAddedToDB()
 		{
-			List<RaceCourse> expectedListRaceCourses = new RaceCourse()
-			{
-				new RaceCourse { 1,"Aintree"},
-
-				, "Ascot", "Ayr", "Bangor", "Chester", "Cork",
+			List<RaceCourse> expectedListRaceCourses = new List<RaceCourse>();
+			List<string> expectedNames = new List<string> {"Aintree", "Ascot", "Ayr", "Bangor", "Chester", "Cork",
 				"Doncaster", "Dundalk", "Fairyhouse", "Goodwood", "Haydock", "Kelso", "Kilbeggan",
 				"Perth", "Punchestown", "Sandown", "Towcester", "York"};
-			List<RaceCourse> rcList = new List<RaceCourse>();
+			int idReference = 1;
+			foreach (var name in expectedNames)
+			{
+				RaceCourse rc = new RaceCourse();
+				rc.RaceCourseID = idReference;
+				rc.RaceCourseName = name;
+				expectedListRaceCourses.Add(rc);
+				idReference++;
+			}
+
+
+			List<RaceCourse> ActualRaceCourseList = new List<RaceCourse>();
 			SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
 
 			//set up			
@@ -55,14 +63,20 @@ namespace TestHotTipster
 			{
 				dbConnection.Open();
 				dataWriter.InsertExistingRaceCoursesIntoDB();
-				rcList = dataWriter.RetrieveRaceCourseNamesFromDB();
+				ActualRaceCourseList = dataWriter.RetrieveRaceCourseNamesFromDB();
 				dbConnection.Close();
 			}
 
-			int expectedLength = 18; //number of unique racecourse names in historic data
-			int actualLenght = rcList.Count;
+			int expectedLength = expectedListRaceCourses.Count; //number of unique racecourse names in historic data
+			int actualLenght = ActualRaceCourseList.Count;
 
 			Assert.AreEqual(expectedLength, actualLenght);
+			Assert.AreEqual(expectedListRaceCourses[0].RaceCourseID, ActualRaceCourseList[0].RaceCourseID);
+			Assert.AreEqual(expectedListRaceCourses[0].RaceCourseName, ActualRaceCourseList[0].RaceCourseName);
+			Assert.AreEqual(expectedListRaceCourses[0].RaceCourseName, "Aintree");
+			Assert.IsInstanceOfType(ActualRaceCourseList[0], typeof(RaceCourse));
+			Assert.IsInstanceOfType(expectedListRaceCourses[0], typeof(RaceCourse));
+			//CollectionAssert.AreEquivalent(expectedListRaceCourses, ActualRaceCourseList);
 		}
 
 

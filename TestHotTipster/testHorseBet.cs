@@ -5,6 +5,8 @@ using HotTipster.DataWriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
+using HotTipster.HorseBets;
+using HotTipster.HistoricData;
 
 namespace TestHotTipster
 {
@@ -57,5 +59,46 @@ namespace TestHotTipster
 			Assert.IsFalse(bets.Any(bet => bet.CourseID == 20));
 
 		}
+
+
+		[TestMethod]
+		public void ReplaceCourseNameWithCourseID()
+		{
+			WriteToSQLite writer = new WriteToSQLite();
+			HorseBetDataReader reader = new HorseBetDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
+			IList<RaceCourse> rcList = writer.RetrieveRaceCourseNamesFromDB();
+			List<HorseBet> historicBets = reader.ListOfHistoricHorseBetsOriginal();
+			//var inputData = historicBets.Join(rcList,
+			//								horseBet => horseBet.RaceCourseName,
+			//								raceCourse => raceCourse.RaceCourseName,
+			//								(horsebet, racecourse) => new
+			//								{
+			//									CourseID = racecourse.RaceCourseID,
+			//									RaceDate = horsebet.RaceDate,
+			//									Result = horsebet.BetResult,
+			//									Amount = horsebet.BetAmount
+
+			//								});
+			foreach (var bet in historicBets)
+			{
+				var id = (from rc in rcList
+						 where rc.RaceCourseName == bet.RaceCourseName
+						 select rc.RaceCourseID).ToArray();
+				bet.CourseID = id[0];
+			}
+
+			//List<HorseBet> actualResult = new List<HorseBet>();
+			//foreach (var bet in inputData)
+			//{
+			//	HorseBet hb = new HorseBet(bet.CourseID, bet.RaceDate, bet.Amount, bet.Result);
+			//	actualResult.Add(hb);
+			//}
+			List<HorseBet> expectedResult = reader.ListOfHistoricHorseBetsWithCourseID();
+
+			CollectionAssert.AreEquivalent(expectedResult, historicBets);
+
+
+		}
+
 	}
 }
