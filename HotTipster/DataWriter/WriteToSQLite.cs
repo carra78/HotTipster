@@ -14,8 +14,9 @@ namespace HotTipster.DataWriter
 	public class WriteToSQLite : IDataWriter
 	{
 		private static string databaseName = "HotTipster.db";
-		//static SqliteConnection dbConnection = new SqliteConnection(string.Format("Filename='{0}'", databaseName));
 		SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
+		HorseBetDataReader reader = new HorseBetDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
+		
 
 		public void WriteData()
 		{
@@ -91,6 +92,70 @@ namespace HotTipster.DataWriter
 				}
 
 			}
+		}
+
+		public List<RaceCourse> RetrieveRaceCourseNamesFromDB()
+		{
+			string query = "SELECT RaceCourseID, RaceCourseName FROM Racecourses";
+			SqliteCommand cmdselectCourseNames = new SqliteCommand(query, dbConnection);
+			List<RaceCourse> rcList = new List<RaceCourse>();
+
+			using (dbConnection)
+			{				
+				dbConnection.Open();
+				SqliteDataReader results = cmdselectCourseNames.ExecuteReader();
+				while (results.Read())
+				{
+					RaceCourse rc = new RaceCourse();
+					rc.RaceCourseID = results.GetInt32(0);
+					rc.RaceCourseName = results.GetString(1);
+					rcList.Add(rc);
+				}
+
+			}
+			return rcList;
+		}
+
+		public List<HorseBet> ReplaceCourseNameWithCourseIDHistoricBets()
+		{
+			IList<RaceCourse> rcList = RetrieveRaceCourseNamesFromDB();
+			IList<HorseBet> historicBets = reader.ListOfHistoricHorseBets();
+			var inputData = historicBets.Join(rcList,
+											horseBet => horseBet.RaceCourseName,
+											raceCourse => raceCourse.RaceCourseName,
+											(horsebet, racecourse) => new
+											{
+												CourseID = racecourse.RaceCourseID,
+												RaceDate = horsebet.RaceDate,
+												Result = horsebet.BetResult,
+												Amount = horsebet.BetAmount
+
+											}).ToList();
+			List<HorseBet> result = new List<HorseBet>();
+			foreach (var bet in inputData)
+			{
+				HorseBet hb = new HorseBet(bet.CourseID, bet.RaceDate, bet.Amount, bet.Result);
+				result.Add(hb);
+			}
+
+			return result;
+
+		}
+
+
+		public void InsertExistingBetData()
+		{
+			
+
+			string insertBets = "INSERT INTO HorseBets (RaceCourseID,RaceDate,BetResult,BetAmount)" +
+				"VALUES(@courseID, @raceDate, @result, @amount)";
+			SqliteCommand cmdInsertHistoricBets = new SqliteCommand(insertBets, dbConnection);
+			SqliteParameter courseID = new SqliteParameter("@courseID", SqliteType.Integer);
+			SqliteParameter raceDate = new SqliteParameter("@raceDate", SqliteType.Text);
+			SqliteParameter result = new SqliteParameter("@result", SqliteType.Text);
+			SqliteParameter amount = new SqliteParameter("@amount", SqliteType.Real);
+			
+
 		}
 
 
