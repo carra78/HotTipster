@@ -5,6 +5,8 @@ using System.IO;
 using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
 using HotTipster.HorseBets;
+using HotTipster;
+using System.Collections;
 
 namespace TestHotTipster
 {
@@ -38,38 +40,33 @@ namespace TestHotTipster
 		[TestMethod]
 		public void check18RaceCourseNamesAddedToDB()
 		{
-			dataWriter = new WriteToSQLite();
+			List<RaceCourse> expectedListRaceCourses = new RaceCourse()
+			{
+				new RaceCourse { 1,"Aintree"},
+
+				, "Ascot", "Ayr", "Bangor", "Chester", "Cork",
+				"Doncaster", "Dundalk", "Fairyhouse", "Goodwood", "Haydock", "Kelso", "Kilbeggan",
+				"Perth", "Punchestown", "Sandown", "Towcester", "York"};
 			List<RaceCourse> rcList = new List<RaceCourse>();
 			SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
 
-			//set up query using parameters
-			string query = "SELECT RaceCourseID, RaceCourseName FROM Racecourses";
-			SqliteCommand cmdselectCourseNames = new SqliteCommand(query, dbConnection);
-			
+			//set up			
 			using (dbConnection)
 			{
 				dbConnection.Open();
 				dataWriter.InsertExistingRaceCoursesIntoDB();
-				SqliteDataReader results = cmdselectCourseNames.ExecuteReader();
-				while (results.Read())
-				{
-					RaceCourse rc = new RaceCourse();
-					rc.RaceCourseID = results.GetInt32(0);
-					rc.RaceCourseName = results.GetString(1);
-					rcList.Add(rc);
-				}
-				
+				rcList = dataWriter.RetrieveRaceCourseNamesFromDB();
+				dbConnection.Close();
 			}
 
 			int expectedLength = 18; //number of unique racecourse names in historic data
 			int actualLenght = rcList.Count;
 
 			Assert.AreEqual(expectedLength, actualLenght);
-
-
 		}
 
 
-		
+
+
 	}
 }

@@ -38,7 +38,7 @@ namespace TestHotTipster
 		[TestMethod]
 		public void testExpectedValuesReturned_ListOfHistoricBets()
 		{
-			List<HorseBet> historicBets = myReader.ListOfHorseBets();
+			List<HorseBet> historicBets = myReader.ListOfHistoricHorseBets();
 			CollectionAssert.AllItemsAreInstancesOfType(historicBets, typeof(HorseBet));
 			//HorseBet item0 = new HorseBet("Aintree", new DateTime(2017, 5, 12), 11.58m, true );
 			//HorseBet item19 = new HorseBet("Goodwood", new DateTime(2016, 10, 5), 34.12m, true);

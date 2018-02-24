@@ -21,7 +21,7 @@ namespace TestHotTipster
 		public void testExpectedValuesNotReturned_ListOfHorseBets()
 		{
 			HorseBetDataReader myReader = new HorseBetDataReader(@"C:\Users\carra\Documents\HotTipster\BadDataTestFile.txt");
-			List<HorseBet> mybets = myReader.ListOfHorseBets();
+			List<HorseBet> mybets = myReader.ListOfHistoricHorseBets();
 				
 		}
 	}
