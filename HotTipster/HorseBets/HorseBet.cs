@@ -43,6 +43,14 @@ namespace HotTipster
 			HorseID = horseID;
 
 		}
+		public HorseBet(string raceCourse, DateTime raceDate, decimal betAmount, bool win, int courseID)
+		{
+			RaceCourseName = raceCourse;
+			RaceDate = raceDate;
+			BetAmount = betAmount;
+			BetResult = win;
+			CourseID = courseID;
+		}
 
 
 		//public IEnumerator<HorseBet> GetEnumerator()

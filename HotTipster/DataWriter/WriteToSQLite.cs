@@ -116,10 +116,12 @@ namespace HotTipster.DataWriter
 			return rcList;
 		}
 
+
+
 		public List<HorseBet> ReplaceCourseNameWithCourseIDHistoricBets()
 		{
 			IList<RaceCourse> rcList = RetrieveRaceCourseNamesFromDB();
-			IList<HorseBet> historicBets = reader.ListOfHistoricHorseBets();
+			IList<HorseBet> historicBets = reader.ListOfHistoricHorseBetsOriginal();
 			var inputData = historicBets.Join(rcList,
 											horseBet => horseBet.RaceCourseName,
 											raceCourse => raceCourse.RaceCourseName,

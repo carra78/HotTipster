@@ -15,9 +15,10 @@ namespace HotTipster.HorseBets
 		public int RaceCourseID { get; set; }
 		List<RaceCourse> courseList = new List<RaceCourse>();
 
-		public RaceCourse( int id = 0, string raceCourseName)
+		public RaceCourse( string raceCourseName, int id = 0)
 		{
 			RaceCourseName = raceCourseName;
+			RaceCourseID = id;
 		}
 		public RaceCourse()
 		{
@@ -36,7 +37,7 @@ namespace HotTipster.HorseBets
 		public List<string> ExistingRaceCourseNames()
 		{
 			HorseBetDataReader myReader = new HorseBetDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
-			List<HorseBet> historicBets = myReader.ListOfHistoricHorseBets();
+			List<HorseBet> historicBets = myReader.ListOfHistoricHorseBetsOriginal();
 			//var names = historicBets.GroupBy(x => x.RaceCourseName).Select(y => y.First().ToString()).ToList();
 			var groupednames = historicBets.GroupBy(x => x.RaceCourseName);
 			List<string> names = new List<string>();
