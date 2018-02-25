@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HotTipster.DataWriter;
+using HotTipster.DataAccess;
 using System.IO;
 using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
-using HotTipster.HorseBets;
 using HotTipster;
 using System.Collections;
 
@@ -56,9 +55,7 @@ namespace TestHotTipster
 
 
 			List<RaceCourse> ActualRaceCourseList = new List<RaceCourse>();
-			SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
-
-			//set up			
+			SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");			
 			using (dbConnection)
 			{
 				dbConnection.Open();
@@ -76,10 +73,32 @@ namespace TestHotTipster
 			Assert.AreEqual(expectedListRaceCourses[0].RaceCourseName, "Aintree");
 			Assert.IsInstanceOfType(ActualRaceCourseList[0], typeof(RaceCourse));
 			Assert.IsInstanceOfType(expectedListRaceCourses[0], typeof(RaceCourse));
-			//CollectionAssert.AreEquivalent(expectedListRaceCourses, ActualRaceCourseList);
+			//CollectionAssert.AreEquivalent(expectedListRaceCourses, ActualRaceCourseList, "Message",new RaceCourseComparer()); can't get this to pass even though both lists are the same
 		}
 
+		
 
+
+
+
+		class RaceCourseComparer : Comparer<RaceCourse>
+		{
+			public override int Compare(RaceCourse x, RaceCourse y)
+			{
+				if (x.RaceCourseID.CompareTo(y.RaceCourseID) != 0)
+				{
+					return x.RaceCourseID.CompareTo(y.RaceCourseID);
+				}
+				else if (x.RaceCourseName.CompareTo(y.RaceCourseName) != 0)
+				{
+					return x.RaceCourseName.CompareTo(y.RaceCourseName);
+				}
+				else
+				{
+					return 0;
+				}
+			}
+		}
 
 
 	}

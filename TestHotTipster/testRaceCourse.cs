@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HotTipster.HorseBets;
+using HotTipster;
 using System.Collections.Generic;
 using System.IO;
 
@@ -41,7 +41,7 @@ namespace TestHotTipster
 			CollectionAssert.AreEqual(expectedNames, actualNames); // order must be the same
 		}
 
-
+		
 
 
 	}

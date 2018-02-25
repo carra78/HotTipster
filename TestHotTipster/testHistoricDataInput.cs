@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HotTipster;
-using HotTipster.HistoricData;
+using HotTipster.DataAccess;
 using System.Collections.Generic;
 
 namespace TestHotTipster
@@ -9,12 +9,12 @@ namespace TestHotTipster
 	[TestClass]
 	public class testHistoricDataInputWithValidFilePath
 	{
-		HorseBetDataReader myReader;
+		HistoricDataReader myReader;
 
 		[TestInitialize]
 		public void Initialize()
 		{
-			myReader = new HorseBetDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
+			myReader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
 		}
 
 		[TestMethod]
@@ -28,7 +28,7 @@ namespace TestHotTipster
 		public void testDataReaderConstructor()
 		{
 			string filePath = @"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt";
-			HorseBetDataReader myReader = new HorseBetDataReader(filePath);
+			HistoricDataReader myReader = new HistoricDataReader(filePath);
 			Assert.AreEqual(filePath, myReader.FilePath);
 
 		}
