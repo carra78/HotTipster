@@ -42,7 +42,7 @@ namespace TestHotTipster
 		public void AddCourseIDToHistoricBetData()
 		{
 			List<HorseBet> bets;
-			WriteToSQLite dataWriter = new WriteToSQLite();
+			ReadWriteToSQLite dataWriter = new ReadWriteToSQLite();
 			dataWriter.CreateDatabase();
 			dataWriter.InsertExistingRaceCoursesIntoDB();
 			bets = HorseBet.AddCourseIDToHistoricBetData();
@@ -61,7 +61,7 @@ namespace TestHotTipster
 		[TestMethod]
 		public void ReplaceCourseNameWithCourseID()
 		{
-			WriteToSQLite writer = new WriteToSQLite();
+			ReadWriteToSQLite writer = new ReadWriteToSQLite();
 			HistoricDataReader reader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
 			IList<RaceCourse> rcList = writer.RetrieveRaceCourseNamesFromDB();
 			List<HorseBet> historicBets = reader.ListOfHistoricHorseBetsOriginal();
@@ -96,29 +96,12 @@ namespace TestHotTipster
 		{
 			List<HorseBet> test = new List<HorseBet>();
 			test.Add(new HorseBet("Aintree", new DateTime(2017, 5, 12), 11.58m, true, 1));
-			WriteToSQLite writer = new WriteToSQLite();
+
+			ReadWriteToSQLite writer = new ReadWriteToSQLite();
 			writer.InsertBet(test);
-
-			SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
-			string select = "SELECT RaceCourseID, RaceDate, HorseID, BetResult, BetAmount FROM Horsebets";
-			SqliteCommand selectBets = new SqliteCommand(select, dbConnection);
 			List<HorseBet> retrievedBet = new List<HorseBet>();
-			using (dbConnection)
-			{
-				dbConnection.Open();
-				SqliteDataReader reader = selectBets.ExecuteReader();
-				while (reader.Read())
-				{
-					HorseBet hb = new HorseBet();
-					hb.CourseID = reader.GetInt32(0);
-					hb.RaceDate = DateTime.Parse(reader.GetString(1));
-					hb.HorseID = reader.GetInt32(2);
-					hb.BetResult = bool.Parse(reader.GetString(3));
-					hb.BetAmount = decimal.Parse(reader.GetString(4));
-					retrievedBet.Add(hb);
-				}
-			}
-
+			retrievedBet = writer.RetrieveHorseBetsFromDB();
+			
 			Assert.AreEqual(test[0].CourseID, retrievedBet[0].CourseID);
 			Assert.AreEqual(test[0].BetAmount, retrievedBet[0].BetAmount);
 			Assert.AreEqual(test[0].BetResult, retrievedBet[0].BetResult);

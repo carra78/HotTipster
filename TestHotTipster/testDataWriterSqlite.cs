@@ -12,7 +12,7 @@ namespace TestHotTipster
 	[TestClass]
 	public class testDataWriterSqlite
 	{
-		WriteToSQLite dataWriter = new WriteToSQLite();
+		ReadWriteToSQLite dataWriter = new ReadWriteToSQLite();
 
 		[TestInitialize]
 		public void Initialize()
