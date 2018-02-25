@@ -11,8 +11,8 @@ namespace HotTipster
 	public class HorseBet //: IEnumerable<HorseBet>
 	{
 		//local variables
-		private int betID;
-		List<HorseBet> betList = new List<HorseBet>();
+		//private int betID;
+		//List<HorseBet> betList = new List<HorseBet>();
 
 
 		//properties
@@ -22,8 +22,9 @@ namespace HotTipster
 		public bool BetResult { get; set; }
 		public int CourseID { get; set; } //course name should be tied to ID or redirect to set up new course
 		public int HorseID { get; set; } //name tied to ID or redirect to Add New
+		public int BetID { get; set; }
 		
-		public HorseBet(string raceCourse, DateTime raceDate, decimal betAmount, bool win, int courseID, int horseID = 0)
+		public HorseBet(string raceCourse, DateTime raceDate, decimal betAmount, bool win, int courseID, int horseID = 0, int id = 0)
 		{
 			RaceCourseName = raceCourse;
 			RaceDate = raceDate;
@@ -31,6 +32,7 @@ namespace HotTipster
 			BetResult = win;
 			CourseID = courseID;
 			HorseID = horseID;
+			BetID = id;
 		}
 
 		public HorseBet()
@@ -39,7 +41,7 @@ namespace HotTipster
 		
 		public static List<HorseBet> AddCourseIDToHistoricBetData()
 		{
-			WriteToSQLite writer = new WriteToSQLite();
+			ReadWriteToSQLite writer = new ReadWriteToSQLite();
 			HistoricDataReader reader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
 			List<RaceCourse> rcList = writer.RetrieveRaceCourseNamesFromDB();
 			List<HorseBet> historicBets = reader.ListOfHistoricHorseBetsOriginal();

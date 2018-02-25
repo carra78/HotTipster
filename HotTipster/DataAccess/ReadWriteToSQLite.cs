@@ -14,7 +14,7 @@ using HotTipster.DataAccess;
 
 namespace HotTipster.DataAccess
 {
-	public class WriteToSQLite : IDataWriter
+	public class ReadWriteToSQLite : IDataWriter
 	{
 		private static string databaseName = "HotTipster.db";
 		private SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
@@ -160,10 +160,31 @@ namespace HotTipster.DataAccess
 					throw;
 				}
 			}
-			
-
 		}
 
+		public List<HorseBet> RetrieveHorseBetsFromDB()//add parameters? Apply filtering in code using linq instead?
+		{
+			//SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
+			string select = "SELECT RaceCourseID, RaceDate, HorseID, BetResult, BetAmount FROM Horsebets";
+			SqliteCommand selectBets = new SqliteCommand(select, dbConnection);
+			List<HorseBet> retrievedBet = new List<HorseBet>();
+			using (dbConnection)
+			{
+				dbConnection.Open();
+				SqliteDataReader reader = selectBets.ExecuteReader();
+				while (reader.Read())
+				{
+					HorseBet hb = new HorseBet();
+					hb.CourseID = reader.GetInt32(0);
+					hb.RaceDate = DateTime.Parse(reader.GetString(1));
+					hb.HorseID = reader.GetInt32(2);
+					hb.BetResult = bool.Parse(reader.GetString(3));
+					hb.BetAmount = decimal.Parse(reader.GetString(4));
+					retrievedBet.Add(hb);
+				}
+			}
+			return retrievedBet;
+		}
 
 	}
 }

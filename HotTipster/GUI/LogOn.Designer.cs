@@ -29,11 +29,11 @@
 		private void InitializeComponent()
 		{
 			this.grbLogin = new System.Windows.Forms.GroupBox();
-			this.txtUserName = new System.Windows.Forms.TextBox();
-			this.txtPassword = new System.Windows.Forms.TextBox();
-			this.lblUserName = new System.Windows.Forms.Label();
-			this.lblPassword = new System.Windows.Forms.Label();
 			this.btnLogin = new System.Windows.Forms.Button();
+			this.lblPassword = new System.Windows.Forms.Label();
+			this.lblUserName = new System.Windows.Forms.Label();
+			this.txtPass = new System.Windows.Forms.TextBox();
+			this.txtUser = new System.Windows.Forms.TextBox();
 			this.grbLogin.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -42,8 +42,8 @@
 			this.grbLogin.Controls.Add(this.btnLogin);
 			this.grbLogin.Controls.Add(this.lblPassword);
 			this.grbLogin.Controls.Add(this.lblUserName);
-			this.grbLogin.Controls.Add(this.txtPassword);
-			this.grbLogin.Controls.Add(this.txtUserName);
+			this.grbLogin.Controls.Add(this.txtPass);
+			this.grbLogin.Controls.Add(this.txtUser);
 			this.grbLogin.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.grbLogin.Location = new System.Drawing.Point(37, 26);
 			this.grbLogin.Name = "grbLogin";
@@ -51,29 +51,15 @@
 			this.grbLogin.TabIndex = 0;
 			this.grbLogin.TabStop = false;
 			// 
-			// txtUserName
+			// btnLogin
 			// 
-			this.txtUserName.Location = new System.Drawing.Point(33, 37);
-			this.txtUserName.Name = "txtUserName";
-			this.txtUserName.Size = new System.Drawing.Size(248, 37);
-			this.txtUserName.TabIndex = 0;
-			// 
-			// txtPassword
-			// 
-			this.txtPassword.Location = new System.Drawing.Point(33, 133);
-			this.txtPassword.Name = "txtPassword";
-			this.txtPassword.Size = new System.Drawing.Size(248, 37);
-			this.txtPassword.TabIndex = 1;
-			// 
-			// lblUserName
-			// 
-			this.lblUserName.AutoSize = true;
-			this.lblUserName.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblUserName.Location = new System.Drawing.Point(33, 81);
-			this.lblUserName.Name = "lblUserName";
-			this.lblUserName.Size = new System.Drawing.Size(92, 22);
-			this.lblUserName.TabIndex = 2;
-			this.lblUserName.Text = "User Name";
+			this.btnLogin.Location = new System.Drawing.Point(78, 219);
+			this.btnLogin.Name = "btnLogin";
+			this.btnLogin.Size = new System.Drawing.Size(158, 42);
+			this.btnLogin.TabIndex = 4;
+			this.btnLogin.Text = "Log in";
+			this.btnLogin.UseVisualStyleBackColor = true;
+			this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click_1);
 			// 
 			// lblPassword
 			// 
@@ -85,14 +71,30 @@
 			this.lblPassword.TabIndex = 3;
 			this.lblPassword.Text = "Password";
 			// 
-			// btnLogin
+			// lblUserName
 			// 
-			this.btnLogin.Location = new System.Drawing.Point(78, 219);
-			this.btnLogin.Name = "btnLogin";
-			this.btnLogin.Size = new System.Drawing.Size(158, 42);
-			this.btnLogin.TabIndex = 4;
-			this.btnLogin.Text = "Log in";
-			this.btnLogin.UseVisualStyleBackColor = true;
+			this.lblUserName.AutoSize = true;
+			this.lblUserName.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblUserName.Location = new System.Drawing.Point(33, 81);
+			this.lblUserName.Name = "lblUserName";
+			this.lblUserName.Size = new System.Drawing.Size(92, 22);
+			this.lblUserName.TabIndex = 2;
+			this.lblUserName.Text = "User Name";
+			// 
+			// txtPass
+			// 
+			this.txtPass.Location = new System.Drawing.Point(33, 133);
+			this.txtPass.Name = "txtPass";
+			this.txtPass.PasswordChar = '*';
+			this.txtPass.Size = new System.Drawing.Size(248, 37);
+			this.txtPass.TabIndex = 1;
+			// 
+			// txtUser
+			// 
+			this.txtUser.Location = new System.Drawing.Point(33, 37);
+			this.txtUser.Name = "txtUser";
+			this.txtUser.Size = new System.Drawing.Size(248, 37);
+			this.txtUser.TabIndex = 0;
 			// 
 			// Form1
 			// 
@@ -114,8 +116,8 @@
 		private System.Windows.Forms.Button btnLogin;
 		private System.Windows.Forms.Label lblPassword;
 		private System.Windows.Forms.Label lblUserName;
-		private System.Windows.Forms.TextBox txtPassword;
-		private System.Windows.Forms.TextBox txtUserName;
+		private System.Windows.Forms.TextBox txtPass;
+		private System.Windows.Forms.TextBox txtUser;
 	}
 }
 

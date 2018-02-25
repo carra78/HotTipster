@@ -8,13 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HotTipster
+namespace HotTipster.GUI
 {
-	public partial class Form1 : Form
+	public partial class AddBetInformation : Form
 	{
-		public Form1()
+		public AddBetInformation()
 		{
 			InitializeComponent();
+		}
+
+		private void btnAddBet_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnQuit_Click(object sender, EventArgs e)
+		{
+			this.Close();
 		}
 	}
 }
