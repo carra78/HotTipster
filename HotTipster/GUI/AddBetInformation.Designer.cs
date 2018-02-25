@@ -29,18 +29,18 @@
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
-			this.btnAddNewRaceCourse = new System.Windows.Forms.Button();
-			this.rdoWin = new System.Windows.Forms.RadioButton();
-			this.rdoLose = new System.Windows.Forms.RadioButton();
-			this.dtpRaceDate = new System.Windows.Forms.DateTimePicker();
-			this.txtBetAmount = new System.Windows.Forms.TextBox();
-			this.btnAddBet = new System.Windows.Forms.Button();
 			this.btnQuit = new System.Windows.Forms.Button();
+			this.btnAddBet = new System.Windows.Forms.Button();
+			this.txtBetAmount = new System.Windows.Forms.TextBox();
+			this.dtpRaceDate = new System.Windows.Forms.DateTimePicker();
+			this.rdoLose = new System.Windows.Forms.RadioButton();
+			this.rdoWin = new System.Windows.Forms.RadioButton();
+			this.btnAddNewRaceCourse = new System.Windows.Forms.Button();
+			this.cboRaceCourses = new System.Windows.Forms.ComboBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -53,7 +53,7 @@
 			this.groupBox1.Controls.Add(this.rdoLose);
 			this.groupBox1.Controls.Add(this.rdoWin);
 			this.groupBox1.Controls.Add(this.btnAddNewRaceCourse);
-			this.groupBox1.Controls.Add(this.comboBox1);
+			this.groupBox1.Controls.Add(this.cboRaceCourses);
 			this.groupBox1.Controls.Add(this.label4);
 			this.groupBox1.Controls.Add(this.label3);
 			this.groupBox1.Controls.Add(this.label2);
@@ -65,58 +65,51 @@
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			// 
-			// label1
+			// btnQuit
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(20, 37);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(133, 29);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Race Course";
+			this.btnQuit.Location = new System.Drawing.Point(261, 301);
+			this.btnQuit.Name = "btnQuit";
+			this.btnQuit.Size = new System.Drawing.Size(135, 53);
+			this.btnQuit.TabIndex = 11;
+			this.btnQuit.Text = "Quit";
+			this.btnQuit.UseVisualStyleBackColor = true;
+			this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
 			// 
-			// label2
+			// btnAddBet
 			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(20, 110);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(112, 29);
-			this.label2.TabIndex = 1;
-			this.label2.Text = "Race Date";
+			this.btnAddBet.Location = new System.Drawing.Point(64, 301);
+			this.btnAddBet.Name = "btnAddBet";
+			this.btnAddBet.Size = new System.Drawing.Size(127, 53);
+			this.btnAddBet.TabIndex = 10;
+			this.btnAddBet.Text = "Add Bet";
+			this.btnAddBet.UseVisualStyleBackColor = true;
+			this.btnAddBet.Click += new System.EventHandler(this.btnAddBet_Click);
 			// 
-			// label3
+			// txtBetAmount
 			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(20, 177);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(131, 29);
-			this.label3.TabIndex = 2;
-			this.label3.Text = "Bet Amount";
+			this.txtBetAmount.Location = new System.Drawing.Point(158, 174);
+			this.txtBetAmount.Name = "txtBetAmount";
+			this.txtBetAmount.Size = new System.Drawing.Size(247, 37);
+			this.txtBetAmount.TabIndex = 9;
 			// 
-			// label4
+			// dtpRaceDate
 			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(20, 239);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(112, 29);
-			this.label4.TabIndex = 3;
-			this.label4.Text = "Bet Result";
+			this.dtpRaceDate.CustomFormat = "";
+			this.dtpRaceDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dtpRaceDate.Location = new System.Drawing.Point(160, 110);
+			this.dtpRaceDate.Name = "dtpRaceDate";
+			this.dtpRaceDate.Size = new System.Drawing.Size(245, 37);
+			this.dtpRaceDate.TabIndex = 8;
 			// 
-			// comboBox1
+			// rdoLose
 			// 
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(160, 37);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(164, 37);
-			this.comboBox1.TabIndex = 4;
-			// 
-			// btnAddNewRaceCourse
-			// 
-			this.btnAddNewRaceCourse.Location = new System.Drawing.Point(330, 34);
-			this.btnAddNewRaceCourse.Name = "btnAddNewRaceCourse";
-			this.btnAddNewRaceCourse.Size = new System.Drawing.Size(75, 41);
-			this.btnAddNewRaceCourse.TabIndex = 5;
-			this.btnAddNewRaceCourse.Text = "New";
-			this.btnAddNewRaceCourse.UseVisualStyleBackColor = true;
+			this.rdoLose.AutoSize = true;
+			this.rdoLose.Location = new System.Drawing.Point(261, 237);
+			this.rdoLose.Name = "rdoLose";
+			this.rdoLose.Size = new System.Drawing.Size(82, 33);
+			this.rdoLose.TabIndex = 7;
+			this.rdoLose.Text = "Lose";
+			this.rdoLose.UseVisualStyleBackColor = true;
 			// 
 			// rdoWin
 			// 
@@ -130,51 +123,59 @@
 			this.rdoWin.Text = "Win";
 			this.rdoWin.UseVisualStyleBackColor = true;
 			// 
-			// rdoLose
+			// btnAddNewRaceCourse
 			// 
-			this.rdoLose.AutoSize = true;
-			this.rdoLose.Location = new System.Drawing.Point(261, 237);
-			this.rdoLose.Name = "rdoLose";
-			this.rdoLose.Size = new System.Drawing.Size(82, 33);
-			this.rdoLose.TabIndex = 7;
-			this.rdoLose.Text = "Lose";
-			this.rdoLose.UseVisualStyleBackColor = true;
+			this.btnAddNewRaceCourse.Location = new System.Drawing.Point(330, 34);
+			this.btnAddNewRaceCourse.Name = "btnAddNewRaceCourse";
+			this.btnAddNewRaceCourse.Size = new System.Drawing.Size(75, 41);
+			this.btnAddNewRaceCourse.TabIndex = 5;
+			this.btnAddNewRaceCourse.Text = "New";
+			this.btnAddNewRaceCourse.UseVisualStyleBackColor = true;
+			this.btnAddNewRaceCourse.Click += new System.EventHandler(this.btnAddNewRaceCourse_Click);
 			// 
-			// dtpRaceDate
+			// cboRaceCourses
 			// 
-			this.dtpRaceDate.CustomFormat = "";
-			this.dtpRaceDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpRaceDate.Location = new System.Drawing.Point(160, 110);
-			this.dtpRaceDate.Name = "dtpRaceDate";
-			this.dtpRaceDate.Size = new System.Drawing.Size(245, 37);
-			this.dtpRaceDate.TabIndex = 8;
+			this.cboRaceCourses.FormattingEnabled = true;
+			this.cboRaceCourses.Location = new System.Drawing.Point(160, 37);
+			this.cboRaceCourses.Name = "cboRaceCourses";
+			this.cboRaceCourses.Size = new System.Drawing.Size(164, 37);
+			this.cboRaceCourses.TabIndex = 4;
 			// 
-			// txtBetAmount
+			// label4
 			// 
-			this.txtBetAmount.Location = new System.Drawing.Point(158, 174);
-			this.txtBetAmount.Name = "txtBetAmount";
-			this.txtBetAmount.Size = new System.Drawing.Size(247, 37);
-			this.txtBetAmount.TabIndex = 9;
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(20, 239);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(112, 29);
+			this.label4.TabIndex = 3;
+			this.label4.Text = "Bet Result";
 			// 
-			// btnAddBet
+			// label3
 			// 
-			this.btnAddBet.Location = new System.Drawing.Point(64, 301);
-			this.btnAddBet.Name = "btnAddBet";
-			this.btnAddBet.Size = new System.Drawing.Size(127, 53);
-			this.btnAddBet.TabIndex = 10;
-			this.btnAddBet.Text = "Add Bet";
-			this.btnAddBet.UseVisualStyleBackColor = true;
-			this.btnAddBet.Click += new System.EventHandler(this.btnAddBet_Click);
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(20, 177);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(131, 29);
+			this.label3.TabIndex = 2;
+			this.label3.Text = "Bet Amount";
 			// 
-			// btnQuit
+			// label2
 			// 
-			this.btnQuit.Location = new System.Drawing.Point(261, 301);
-			this.btnQuit.Name = "btnQuit";
-			this.btnQuit.Size = new System.Drawing.Size(135, 53);
-			this.btnQuit.TabIndex = 11;
-			this.btnQuit.Text = "Quit";
-			this.btnQuit.UseVisualStyleBackColor = true;
-			this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(20, 110);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(112, 29);
+			this.label2.TabIndex = 1;
+			this.label2.Text = "Race Date";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(20, 37);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(133, 29);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "Race Course";
 			// 
 			// AddBetInformation
 			// 
@@ -204,6 +205,6 @@
 		private System.Windows.Forms.RadioButton rdoLose;
 		private System.Windows.Forms.RadioButton rdoWin;
 		private System.Windows.Forms.Button btnAddNewRaceCourse;
-		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.ComboBox cboRaceCourses;
 	}
 }

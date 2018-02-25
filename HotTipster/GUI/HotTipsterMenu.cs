@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotTipster.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace HotTipster.GUI
 {
@@ -15,6 +17,14 @@ namespace HotTipster.GUI
 		public HotTipsterMenu()
 		{
 			InitializeComponent();
+			ReadWriteToSQLite sqldb = new ReadWriteToSQLite();
+			HistoricDataReader reader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt"); //Replace with directory ref?
+			if (!File.Exists(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "HotTipster.db"))
+			{
+				sqldb.CreateDatabase();
+				sqldb.InsertExistingRaceCoursesIntoDB();
+				sqldb.InsertListOfBets(reader.ListOfHistoricHorseBetsOriginal());
+			}
 		}
 
 		private void btnAddBetInfo_Click(object sender, EventArgs e)
