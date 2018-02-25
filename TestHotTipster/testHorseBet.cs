@@ -86,19 +86,17 @@ namespace TestHotTipster
 			Assert.AreEqual(expectedResult[10].RaceDate, actualResult[10].RaceDate);
 			//Assert.AreEqual(expectedResult[0], actualResult[0]); //Error = Assert.AreEqual failed. Expected:<HotTipster.HorseBet>. Actual:<HotTipster.HorseBet>. 
 
-			//CollectionAssert.AreEquivalent(expectedResult, actualResult);
-
-
+			//CollectionAssert.AreEquivalent(expectedResult, actualResult); // Can't get this to work
 		}
 
 		[TestMethod]
-		public void TestBetAddedToDatabase()
+		public void TestBetListAddedToDatabase()
 		{
 			List<HorseBet> test = new List<HorseBet>();
 			test.Add(new HorseBet("Aintree", new DateTime(2017, 5, 12), 11.58m, true, 1));
 
 			ReadWriteToSQLite writer = new ReadWriteToSQLite();
-			writer.InsertBet(test);
+			writer.InsertListOfBets(test);
 			List<HorseBet> retrievedBet = new List<HorseBet>();
 			retrievedBet = writer.RetrieveHorseBetsFromDB();
 			
@@ -107,6 +105,17 @@ namespace TestHotTipster
 			Assert.AreEqual(test[0].BetResult, retrievedBet[0].BetResult);
 			Assert.AreEqual(test[0].RaceDate, retrievedBet[0].RaceDate);
 			Assert.AreEqual(test.Count(), retrievedBet.Count());
+		}
+
+		[TestMethod]
+		public void TestInsertNewHorseBet()
+		{
+			ReadWriteToSQLite dataWriter = new ReadWriteToSQLite();
+			List<HorseBet> beforeList = dataWriter.RetrieveHorseBetsFromDB();
+			dataWriter.InsertNewBet(3, new DateTime(2018, 2, 25), true, 25.00M);
+			List<HorseBet> afterList = dataWriter.RetrieveHorseBetsFromDB();
+
+			Assert.AreEqual(afterList.Count, beforeList.Count+1);
 		}
 
 	}
@@ -136,10 +145,10 @@ namespace TestHotTipster
 			{
 				return x.BetResult.CompareTo(y.BetResult);
 			}
-			else if (x.HorseID.CompareTo(y.HorseID) !=0)
-			{
-				return x.HorseID.CompareTo(y.HorseID);
-			}
+			//else if (x.HorseID.CompareTo(y.HorseID) !=0)
+			//{
+			//	return x.HorseID.CompareTo(y.HorseID);
+			//}
 			else
 			{
 				return 0;

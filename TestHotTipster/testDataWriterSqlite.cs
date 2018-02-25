@@ -30,8 +30,8 @@ namespace TestHotTipster
 		public void TestCreateDatabase()
 		{
 			//dataWriter.CreateDatabase(); //creates SQLite DB in TestHotTipster Project in bin\Debug folder
-			string expectedFilepath = string.Format(Directory.GetCurrentDirectory() + Path.PathSeparator + "HotTipster.db"); 
-			string actualFilePath = @"C:\Users\carra\Documents\HotTipster\TestHotTipster\bin\Debug;HotTipster.db";
+			string expectedFilepath = string.Format(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "HotTipster.db"); 
+			string actualFilePath = @"C:\Users\carra\Documents\HotTipster\TestHotTipster\bin\Debug\HotTipster.db";
 			Assert.AreEqual(expectedFilepath, actualFilePath);
 
 		}
@@ -76,6 +76,7 @@ namespace TestHotTipster
 			//CollectionAssert.AreEquivalent(expectedListRaceCourses, ActualRaceCourseList, "Message",new RaceCourseComparer()); can't get this to pass even though both lists are the same
 		}
 
+		
 		
 
 

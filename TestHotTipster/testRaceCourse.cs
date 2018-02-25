@@ -3,22 +3,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HotTipster;
 using System.Collections.Generic;
 using System.IO;
+using HotTipster.DataAccess;
 
 namespace TestHotTipster
 {
 	[TestClass]
 	public class testRaceCourse
 	{
-		[TestInitialize]
-		public void Initialze()
-		{
-			string file = string.Format(Directory.GetCurrentDirectory() + Path.PathSeparator + "HotTipster.db");
-			if (File.Exists(file))
-			{
-				File.Delete(file);
-			}
-		}
-
 		[TestMethod]
 		public void TestRaceCourseClassExists()
 		{
@@ -41,7 +32,28 @@ namespace TestHotTipster
 			CollectionAssert.AreEqual(expectedNames, actualNames); // order must be the same
 		}
 
-		
+		[TestMethod]
+		public void TestAddNewRaceCourse()
+		{
+			ReadWriteToSQLite dataWriter = new ReadWriteToSQLite();
+			List<RaceCourse> beforeList = dataWriter.RetrieveRaceCourseNamesFromDB();
+			dataWriter.InsertNewRaceCourse("Ballinrobe");
+			List<RaceCourse> afterList = dataWriter.RetrieveRaceCourseNamesFromDB();
+
+			Assert.AreEqual(afterList.Count, beforeList.Count + 1);
+		}
+
+		[TestMethod]
+		public void TestAddNewRaceCourseUsingExistingName()
+		{
+			ReadWriteToSQLite dataWriter = new ReadWriteToSQLite();
+			List<RaceCourse> beforeList = dataWriter.RetrieveRaceCourseNamesFromDB();
+			dataWriter.InsertNewRaceCourse("Aintree");
+			List<RaceCourse> afterList = dataWriter.RetrieveRaceCourseNamesFromDB();
+
+			Assert.AreEqual(afterList.Count, beforeList.Count);
+		}
+
 
 
 	}
