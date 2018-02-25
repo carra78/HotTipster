@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotTipster.DataWriter
+namespace HotTipster.DataAccess
 {
 	interface IDataWriter
 	{
 		void WriteData();
+		bool OutputFileExists();
 	}
 }

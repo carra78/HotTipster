@@ -6,24 +6,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Microsoft.Data.Sqlite;
-using HotTipster.HistoricData;
-using HotTipster.HorseBets;
+using HotTipster;
+using HotTipster.DataAccess;
 
-namespace HotTipster.DataWriter
+
+
+
+namespace HotTipster.DataAccess
 {
 	public class WriteToSQLite : IDataWriter
 	{
 		private static string databaseName = "HotTipster.db";
-		SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
-		HorseBetDataReader reader = new HorseBetDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
-		
+		private SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
+		private HistoricDataReader reader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
+		private List<HorseBet> originalBets = new List<HorseBet>();
+
 
 		public void WriteData()
 		{
 
 		}
 
-		public bool CheckDatabaseExists()
+		public bool OutputFileExists()
 		{
 
 			return MyUtilities.ValidFilePath(Directory.GetCurrentDirectory() + Path.PathSeparator + databaseName);
@@ -67,8 +71,9 @@ namespace HotTipster.DataWriter
 			}
 		}
 
-		public void InsertExistingRaceCoursesIntoDB()
+		public void InsertExistingRaceCoursesIntoDB() //REFACTOR TO ADD RC 
 		{
+			//Add if file exists?  May not need if this only fires once
 			using (dbConnection)
 			{
 				string insertExistingRaceCourseName = "INSERT INTO Racecourses(RaceCourseName) VALUES (@courseName);";
@@ -116,46 +121,45 @@ namespace HotTipster.DataWriter
 			return rcList;
 		}
 
-
-
-		public List<HorseBet> ReplaceCourseNameWithCourseIDHistoricBets()
+		public void InsertBet(List<HorseBet> bets)
 		{
-			IList<RaceCourse> rcList = RetrieveRaceCourseNamesFromDB();
-			IList<HorseBet> historicBets = reader.ListOfHistoricHorseBetsOriginal();
-			var inputData = historicBets.Join(rcList,
-											horseBet => horseBet.RaceCourseName,
-											raceCourse => raceCourse.RaceCourseName,
-											(horsebet, racecourse) => new
-											{
-												CourseID = racecourse.RaceCourseID,
-												RaceDate = horsebet.RaceDate,
-												Result = horsebet.BetResult,
-												Amount = horsebet.BetAmount
-
-											}).ToList();
-			List<HorseBet> result = new List<HorseBet>();
-			foreach (var bet in inputData)
-			{
-				HorseBet hb = new HorseBet(bet.CourseID, bet.RaceDate, bet.Amount, bet.Result);
-				result.Add(hb);
-			}
-
-			return result;
-
-		}
-
-
-		public void InsertExistingBetData()
-		{
-			
-
-			string insertBets = "INSERT INTO HorseBets (RaceCourseID,RaceDate,BetResult,BetAmount)" +
-				"VALUES(@courseID, @raceDate, @result, @amount)";
-			SqliteCommand cmdInsertHistoricBets = new SqliteCommand(insertBets, dbConnection);
+			string insertBets = "INSERT INTO HorseBets (RaceCourseID,RaceDate,BetResult,BetAmount,HorseID)" +
+				"VALUES(@courseID, @raceDate, @result, @amount, @horseID)";
+			SqliteCommand cmdInsertBet = new SqliteCommand(insertBets, dbConnection);
 			SqliteParameter courseID = new SqliteParameter("@courseID", SqliteType.Integer);
 			SqliteParameter raceDate = new SqliteParameter("@raceDate", SqliteType.Text);
 			SqliteParameter result = new SqliteParameter("@result", SqliteType.Text);
 			SqliteParameter amount = new SqliteParameter("@amount", SqliteType.Real);
+			SqliteParameter horseID = new SqliteParameter("@horseID", SqliteType.Integer);
+			cmdInsertBet.Parameters.Add(courseID);
+			cmdInsertBet.Parameters.Add(raceDate);
+			cmdInsertBet.Parameters.Add(result);
+			cmdInsertBet.Parameters.Add(amount);
+			cmdInsertBet.Parameters.Add(horseID);
+			//HorseBet hb = new HorseBet();
+			using (dbConnection)
+			{
+				try
+				{
+					dbConnection.Open();
+					foreach (var bet in bets)
+					{
+						courseID.Value = bet.CourseID;
+						raceDate.Value = bet.RaceDate;
+						horseID.Value = bet.HorseID;
+						result.Value = bet.BetResult.ToString();
+						amount.Value = bet.BetAmount;
+						
+						cmdInsertBet.ExecuteNonQuery();
+					}
+
+				}
+				catch (Exception)
+				{
+
+					throw;
+				}
+			}
 			
 
 		}

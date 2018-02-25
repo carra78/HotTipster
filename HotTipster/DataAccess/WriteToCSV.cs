@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotTipster.DataWriter
+namespace HotTipster.DataAccess
 {
 	class WriteToCSV
 	{
 		public void WriteData()
 		{
-
+			//not implemented
 		}
 	}
 }

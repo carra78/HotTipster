@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HotTipster.HistoricData;
-using System.Linq;
+using HotTipster.DataAccess;
 using System.Collections;
 
-namespace HotTipster.HorseBets
+
+namespace HotTipster
 {
 	public class RaceCourse //: IEnumerable<RaceCourse>
 	{
@@ -36,7 +36,7 @@ namespace HotTipster.HorseBets
 
 		public List<string> ExistingRaceCourseNames()
 		{
-			HorseBetDataReader myReader = new HorseBetDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
+			HistoricDataReader myReader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
 			List<HorseBet> historicBets = myReader.ListOfHistoricHorseBetsOriginal();
 			//var names = historicBets.GroupBy(x => x.RaceCourseName).Select(y => y.First().ToString()).ToList();
 			var groupednames = historicBets.GroupBy(x => x.RaceCourseName);

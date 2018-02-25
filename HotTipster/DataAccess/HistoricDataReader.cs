@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using HotTipster.Utilities;
 using System.IO;
 
-namespace HotTipster.HistoricData
+namespace HotTipster.DataAccess
 {
-	public class HorseBetDataReader
+	public class HistoricDataReader
 	{
 		//local variables
 		private string[] stringSplitCommaSeparator = { "," };
@@ -18,7 +18,7 @@ namespace HotTipster.HistoricData
 		
 
 		//Constructors
-		public HorseBetDataReader(string filepath = "")
+		public HistoricDataReader(string filepath = "")
 		{
 			if (MyUtilities.ValidFilePath(filepath))
 			{
@@ -50,7 +50,7 @@ namespace HotTipster.HistoricData
 						bet[3] = bet[3].Substring(0, 2);
 						bet[4] = bet[4].Substring(0, bet[4].Length - 1);
 
-						result.Add(new HorseBet(bet[0], new DateTime(int.Parse(bet[1]), int.Parse(bet[2]), int.Parse(bet[3])), decimal.Parse(bet[4]), bool.Parse(bet[5])));
+						result.Add(new HorseBet(bet[0], new DateTime(int.Parse(bet[1]), int.Parse(bet[2]), int.Parse(bet[3])), decimal.Parse(bet[4]), bool.Parse(bet[5]),0 ));
 					}
 				}
 			}
