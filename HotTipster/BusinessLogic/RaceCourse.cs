@@ -24,21 +24,11 @@ namespace HotTipster
 		{
 		}
 
-		//public IEnumerator<RaceCourse> GetEnumerator()
-		//{
-		//	return courseList.GetEnumerator();
-		//}
-
-		//IEnumerator IEnumerable.GetEnumerator()
-		//{
-		//	return this.GetEnumerator();
-		//}
 
 		public List<string> ExistingRaceCourseNames()
 		{
 			HistoricDataReader myReader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
 			List<HorseBet> historicBets = myReader.ListOfHistoricHorseBetsOriginal();
-			//var names = historicBets.GroupBy(x => x.RaceCourseName).Select(y => y.First().ToString()).ToList();
 			var groupednames = historicBets.GroupBy(x => x.RaceCourseName);
 			List<string> names = new List<string>();
 			foreach (var rcGroup in groupednames)

@@ -21,17 +21,17 @@ namespace HotTipster
 		public decimal BetAmount { get; set; }
 		public bool BetResult { get; set; }
 		public int CourseID { get; set; } //course name should be tied to ID or redirect to set up new course
-		public int HorseID { get; set; } //name tied to ID or redirect to Add New
+		//public int HorseID { get; set; } //name tied to ID or redirect to Add New
 		public int BetID { get; set; }
 		
-		public HorseBet(string raceCourse, DateTime raceDate, decimal betAmount, bool win, int courseID, int horseID = 0, int id = 0)
+		public HorseBet(string raceCourse, DateTime raceDate, decimal betAmount, bool win, int courseID, int id = 0)
 		{
 			RaceCourseName = raceCourse;
 			RaceDate = raceDate;
 			BetAmount = betAmount;
 			BetResult = win;
 			CourseID = courseID;
-			HorseID = horseID;
+			//HorseID = horseID;
 			BetID = id;
 		}
 
@@ -57,7 +57,16 @@ namespace HotTipster
 
 		}
 
+		public static List<string> ListOfRaceCourseNamesForAddBetComboBox()
+		{
+			//no unit test - rely on test for retrieve racecourse list from DB and observation of result in combo box
+			ReadWriteToSQLite reader = new ReadWriteToSQLite();
+			List<RaceCourse> rcList = reader.RetrieveRaceCourseNamesFromDB();
+			var comboList = (from rc in rcList
+							 select rc.RaceCourseName).ToList();
 
+			return comboList;
+		}
 
 
 	}

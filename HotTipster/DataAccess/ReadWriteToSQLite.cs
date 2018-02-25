@@ -37,9 +37,9 @@ namespace HotTipster.DataAccess
 		{
 			using (dbConnection)
 			{
-				string createHorsesTable = "CREATE TABLE IF NOT EXISTS Horses" +
-					"(HorseID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-					"HorseName NVARCHAR(150) NOT NULL)";
+				//string createHorsesTable = "CREATE TABLE IF NOT EXISTS Horses" +
+				//	"(HorseID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				//	"HorseName NVARCHAR(150) NOT NULL)";
 				string createRaceCoursesTable = "CREATE TABLE IF NOT EXISTS RaceCourses" +
 					"(RaceCourseID INTEGER PRIMARY KEY AUTOINCREMENT, " +
 					"RaceCourseName NVARCHAR(150) NOT NULL)";
@@ -51,14 +51,14 @@ namespace HotTipster.DataAccess
 					"BetResult text NOT NULL," +
 					"BetAmount real NOT NULL)";				
 
-				SqliteCommand cmdHorsesTable = new SqliteCommand(createHorsesTable, dbConnection);
+				//SqliteCommand cmdHorsesTable = new SqliteCommand(createHorsesTable, dbConnection);
 				SqliteCommand cmdCoursesTable = new SqliteCommand(createRaceCoursesTable, dbConnection);
 				SqliteCommand cmdHorseBetsTable = new SqliteCommand(createHorseBetsTable, dbConnection);
 
 				try
 				{
 					dbConnection.Open();
-					cmdHorsesTable.ExecuteNonQuery();
+					//cmdHorsesTable.ExecuteNonQuery();
 					cmdCoursesTable.ExecuteNonQuery();
 					cmdHorseBetsTable.ExecuteNonQuery();
 					
@@ -99,6 +99,37 @@ namespace HotTipster.DataAccess
 			}
 		}
 
+		public void InsertNewRaceCourse(string racecourseName) 
+		{
+			//Not Tested - check that list of RC count increased by one if used
+			using (dbConnection)
+			{
+				string insertExistingRaceCourseName = "INSERT INTO Racecourses(RaceCourseName) VALUES (@courseName);";
+				SqliteCommand cmdInsertRaceCourseNames = new SqliteCommand(insertExistingRaceCourseName, dbConnection);
+				SqliteParameter courseName = new SqliteParameter("@courseName", SqliteType.Text);
+				cmdInsertRaceCourseNames.Parameters.Add(courseName);
+				
+				try
+				{					
+					List<RaceCourse> existing = RetrieveRaceCourseNamesFromDB();
+					var name = (from rc in existing
+								select rc.RaceCourseName).ToArray();
+					if (!name.Contains(racecourseName))
+					{
+						dbConnection.Open();
+						courseName.Value = racecourseName;
+						cmdInsertRaceCourseNames.ExecuteNonQuery();
+					}
+					
+				}
+				catch (Exception)
+				{
+
+					throw;
+				}
+			}
+		}
+
 		public List<RaceCourse> RetrieveRaceCourseNamesFromDB()
 		{
 			string query = "SELECT RaceCourseID, RaceCourseName FROM Racecourses";
@@ -121,21 +152,21 @@ namespace HotTipster.DataAccess
 			return rcList;
 		}
 
-		public void InsertBet(List<HorseBet> bets)
+		public void InsertListOfBets(List<HorseBet> bets)
 		{
-			string insertBets = "INSERT INTO HorseBets (RaceCourseID,RaceDate,BetResult,BetAmount,HorseID)" +
-				"VALUES(@courseID, @raceDate, @result, @amount, @horseID)";
+			string insertBets = "INSERT INTO HorseBets (RaceCourseID,RaceDate,BetResult,BetAmount)" +
+				"VALUES(@courseID, @raceDate, @result, @amount)";
 			SqliteCommand cmdInsertBet = new SqliteCommand(insertBets, dbConnection);
 			SqliteParameter courseID = new SqliteParameter("@courseID", SqliteType.Integer);
 			SqliteParameter raceDate = new SqliteParameter("@raceDate", SqliteType.Text);
 			SqliteParameter result = new SqliteParameter("@result", SqliteType.Text);
 			SqliteParameter amount = new SqliteParameter("@amount", SqliteType.Real);
-			SqliteParameter horseID = new SqliteParameter("@horseID", SqliteType.Integer);
+			//SqliteParameter horseID = new SqliteParameter("@horseID", SqliteType.Integer);
 			cmdInsertBet.Parameters.Add(courseID);
 			cmdInsertBet.Parameters.Add(raceDate);
 			cmdInsertBet.Parameters.Add(result);
 			cmdInsertBet.Parameters.Add(amount);
-			cmdInsertBet.Parameters.Add(horseID);
+			//cmdInsertBet.Parameters.Add(horseID);
 			//HorseBet hb = new HorseBet();
 			using (dbConnection)
 			{
@@ -146,7 +177,7 @@ namespace HotTipster.DataAccess
 					{
 						courseID.Value = bet.CourseID;
 						raceDate.Value = bet.RaceDate;
-						horseID.Value = bet.HorseID;
+						//horseID.Value = bet.HorseID;
 						result.Value = bet.BetResult.ToString();
 						amount.Value = bet.BetAmount;
 						
@@ -162,10 +193,41 @@ namespace HotTipster.DataAccess
 			}
 		}
 
+		public void InsertNewBet(int rcID, DateTime date, bool betResult, decimal betAmount)
+		{
+			string insertBets = "INSERT INTO HorseBets (RaceCourseID,RaceDate,BetResult,BetAmount)" +
+				"VALUES(@courseID, @raceDate, @result, @amount)";
+			SqliteCommand cmdInsertBet = new SqliteCommand(insertBets, dbConnection);
+			SqliteParameter courseID = new SqliteParameter("@courseID", SqliteType.Integer);
+			SqliteParameter raceDate = new SqliteParameter("@raceDate", SqliteType.Text);
+			SqliteParameter result = new SqliteParameter("@result", SqliteType.Text);
+			SqliteParameter amount = new SqliteParameter("@amount", SqliteType.Real);
+			cmdInsertBet.Parameters.Add(courseID);
+			cmdInsertBet.Parameters.Add(raceDate);
+			cmdInsertBet.Parameters.Add(result);
+			cmdInsertBet.Parameters.Add(amount);
+			using (dbConnection)
+			{
+				try
+				{
+					dbConnection.Open();
+					courseID.Value = rcID;
+					raceDate.Value = date;
+					result.Value = betResult.ToString();
+					amount.Value = betAmount;
+					cmdInsertBet.ExecuteNonQuery();
+				}
+				catch (Exception)
+				{
+					throw;
+				}
+			}
+		}
+
 		public List<HorseBet> RetrieveHorseBetsFromDB()//add parameters? Apply filtering in code using linq instead?
 		{
 			//SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
-			string select = "SELECT RaceCourseID, RaceDate, HorseID, BetResult, BetAmount FROM Horsebets";
+			string select = "SELECT RaceCourseID, RaceDate, BetResult, BetAmount FROM Horsebets";
 			SqliteCommand selectBets = new SqliteCommand(select, dbConnection);
 			List<HorseBet> retrievedBet = new List<HorseBet>();
 			using (dbConnection)
@@ -177,9 +239,9 @@ namespace HotTipster.DataAccess
 					HorseBet hb = new HorseBet();
 					hb.CourseID = reader.GetInt32(0);
 					hb.RaceDate = DateTime.Parse(reader.GetString(1));
-					hb.HorseID = reader.GetInt32(2);
-					hb.BetResult = bool.Parse(reader.GetString(3));
-					hb.BetAmount = decimal.Parse(reader.GetString(4));
+					//hb.HorseID = reader.GetInt32(2);
+					hb.BetResult = bool.Parse(reader.GetString(2));
+					hb.BetAmount = decimal.Parse(reader.GetString(3));
 					retrievedBet.Add(hb);
 				}
 			}
