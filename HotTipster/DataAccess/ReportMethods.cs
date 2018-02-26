@@ -122,6 +122,44 @@ namespace HotTipster.DataAccess
 			return table;
 		}
 
+		public static List<HorseBet> BiggestWinAndBiggestLoss()
+		{
+			var winningBets = (from hb in hbList
+							   where hb.BetResult == true
+							   select hb).ToList();
+
+			var highestWinAmt = winningBets.Max(x => x.BetAmount);
+
+			var winner = (from hb in winningBets
+						  where hb.BetAmount == highestWinAmt
+						  select hb).ToList();
+			var losingBets = (from hb in hbList
+							  where hb.BetResult == false
+							  select hb).ToList();
+
+			var highestLossAmt = losingBets.Max(x => x.BetAmount);
+
+			var loser = (from hb in losingBets
+						  where hb.BetAmount == highestLossAmt
+						  select hb).ToList();
+
+			winner.AddRange(loser);
+			winner = HorseBet.AddCoursenNameToRetrievedHorseBetData(winner);
+
+			return winner;						  
+		}
+
+		public static int[] HotTipsterStats()
+		{
+			var winningBets = (from hb in hbList
+							   where hb.BetResult == true
+							   select hb).ToList();
+
+			int[] result = { hbList.Count(), winningBets.Count() };
+			return result;
+		}
+
+
 
 
 	}

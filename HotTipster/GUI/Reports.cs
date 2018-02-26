@@ -53,12 +53,20 @@ namespace HotTipster.GUI
 
 		private void btnReportMaxWinLose_Click(object sender, EventArgs e)
 		{
-
+			lstDisplay.Visible = false;
+			dgvReports.DataSource = null;
+			dgvReports.Rows.Clear();
+			dgvReports.DataSource = ReportMethods.ListOfBetsToDataTable(ReportMethods.BiggestWinAndBiggestLoss());
+			dgvReports.Visible = true;
 		}
 
 		private void btnReportSuccessRate_Click(object sender, EventArgs e)
 		{
-
+			dgvReports.Visible = false;
+			lstDisplay.Items.Clear();
+			int[] totals = ReportMethods.HotTipsterStats();
+			lstDisplay.Items.Add(string.Format("The total number of bets is {0} and the total won is {1}.", totals[0], totals[1]));
+			lstDisplay.Visible = true;
 		}
 
 		private void btnQuit_Click(object sender, EventArgs e)
