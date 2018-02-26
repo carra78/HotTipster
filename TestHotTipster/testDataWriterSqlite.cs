@@ -60,7 +60,7 @@ namespace TestHotTipster
 			{
 				dbConnection.Open();
 				dataWriter.InsertExistingRaceCoursesIntoDB();
-				ActualRaceCourseList = dataWriter.RetrieveRaceCourseNamesFromDB();
+				ActualRaceCourseList = ReadWriteToSQLite.RetrieveRaceCourseNamesFromDB();
 				dbConnection.Close();
 			}
 
@@ -81,7 +81,7 @@ namespace TestHotTipster
 
 
 
-
+		//Not used - was trying to figure out how to get CollectionsAssert.Equivalent to work...
 		class RaceCourseComparer : Comparer<RaceCourse>
 		{
 			public override int Compare(RaceCourse x, RaceCourse y)

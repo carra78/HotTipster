@@ -46,6 +46,7 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Sqlite, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Sqlite.Core.2.0.0\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
     </Reference>
@@ -80,6 +81,7 @@
     <Compile Include="testDataInputInvalidFile.cs" />
     <Compile Include="testHorseBet.cs" />
     <Compile Include="testRaceCourse.cs" />
+    <Compile Include="TestReportMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

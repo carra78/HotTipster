@@ -36,9 +36,9 @@ namespace TestHotTipster
 		public void TestAddNewRaceCourse()
 		{
 			ReadWriteToSQLite dataWriter = new ReadWriteToSQLite();
-			List<RaceCourse> beforeList = dataWriter.RetrieveRaceCourseNamesFromDB();
+			List<RaceCourse> beforeList = ReadWriteToSQLite.RetrieveRaceCourseNamesFromDB();
 			dataWriter.InsertNewRaceCourse("Ballinrobe");
-			List<RaceCourse> afterList = dataWriter.RetrieveRaceCourseNamesFromDB();
+			List<RaceCourse> afterList = ReadWriteToSQLite.RetrieveRaceCourseNamesFromDB();
 
 			Assert.AreEqual(afterList.Count, beforeList.Count + 1);
 		}
@@ -47,9 +47,9 @@ namespace TestHotTipster
 		public void TestAddNewRaceCourseUsingExistingName()
 		{
 			ReadWriteToSQLite dataWriter = new ReadWriteToSQLite();
-			List<RaceCourse> beforeList = dataWriter.RetrieveRaceCourseNamesFromDB();
+			List<RaceCourse> beforeList = ReadWriteToSQLite.RetrieveRaceCourseNamesFromDB();
 			dataWriter.InsertNewRaceCourse("Aintree");
-			List<RaceCourse> afterList = dataWriter.RetrieveRaceCourseNamesFromDB();
+			List<RaceCourse> afterList = ReadWriteToSQLite.RetrieveRaceCourseNamesFromDB();
 
 			Assert.AreEqual(afterList.Count, beforeList.Count);
 		}

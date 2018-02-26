@@ -61,9 +61,8 @@ namespace TestHotTipster
 		[TestMethod]
 		public void ReplaceCourseNameWithCourseID()
 		{
-			ReadWriteToSQLite writer = new ReadWriteToSQLite();
-			HistoricDataReader reader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
-			IList<RaceCourse> rcList = writer.RetrieveRaceCourseNamesFromDB();
+			HistoricDataReader reader = new HistoricDataReader();// @"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
+			IList<RaceCourse> rcList = ReadWriteToSQLite.RetrieveRaceCourseNamesFromDB();
 			List<HorseBet> historicBets = reader.ListOfHistoricHorseBetsOriginal();
 
 			foreach (var bet in historicBets)
@@ -98,7 +97,7 @@ namespace TestHotTipster
 			ReadWriteToSQLite writer = new ReadWriteToSQLite();
 			writer.InsertListOfBets(test);
 			List<HorseBet> retrievedBet = new List<HorseBet>();
-			retrievedBet = writer.RetrieveHorseBetsFromDB();
+			retrievedBet = ReadWriteToSQLite.RetrieveHorseBetsFromDB();
 			
 			Assert.AreEqual(test[0].CourseID, retrievedBet[0].CourseID);
 			Assert.AreEqual(test[0].BetAmount, retrievedBet[0].BetAmount);
@@ -111,9 +110,9 @@ namespace TestHotTipster
 		public void TestInsertNewHorseBet()
 		{
 			ReadWriteToSQLite dataWriter = new ReadWriteToSQLite();
-			List<HorseBet> beforeList = dataWriter.RetrieveHorseBetsFromDB();
+			List<HorseBet> beforeList = ReadWriteToSQLite.RetrieveHorseBetsFromDB();
 			dataWriter.InsertNewBet(3, new DateTime(2018, 2, 25), true, 25.00M);
-			List<HorseBet> afterList = dataWriter.RetrieveHorseBetsFromDB();
+			List<HorseBet> afterList = ReadWriteToSQLite.RetrieveHorseBetsFromDB();
 
 			Assert.AreEqual(afterList.Count, beforeList.Count+1);
 		}

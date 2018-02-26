@@ -14,7 +14,7 @@ namespace TestHotTipster
 		[TestInitialize]
 		public void Initialize()
 		{
-			myReader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
+			myReader = new HistoricDataReader();//@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
 		}
 
 		[TestMethod]
@@ -24,14 +24,15 @@ namespace TestHotTipster
 			Assert.IsInstanceOfType(myReader, typeof(Object));
 		}
 
-		[TestMethod]
-		public void testDataReaderConstructor()
-		{
-			string filePath = @"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt";
-			HistoricDataReader myReader = new HistoricDataReader(filePath);
-			Assert.AreEqual(filePath, myReader.FilePath);
+		//REMOVED PROPERTY
+		//[TestMethod]
+		//public void testDataReaderConstructor()
+		//{
+		//	string filePath = @"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt";
+		//	HistoricDataReader myReader = new HistoricDataReader();// (filePath);
+		//	Assert.AreEqual(filePath, myReader.FilePath);
 
-		}
+		//}
 
 
 

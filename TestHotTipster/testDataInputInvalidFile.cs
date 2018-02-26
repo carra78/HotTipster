@@ -9,20 +9,21 @@ namespace TestHotTipster
 	[TestClass]
 	public class testDataInputInvalidFile
 	{
-		[TestMethod]
-		[ExpectedException(typeof(Exception))]
-		public void testDataReaderNotCreatedIfInvalidFilePath()
-		{
-			HistoricDataReader myReader = new HistoricDataReader(@"c:\fakefilepath");
-		}
+		//NOT NEEDED WHEN DEFAULT FILEPATH ADDED
+		//[TestMethod]
+		//[ExpectedException(typeof(Exception))]
+		//public void testDataReaderNotCreatedIfInvalidFilePath()
+		//{
+		//	HistoricDataReader myReader = new HistoricDataReader(@"c:\fakefilepath");
+		//}
 
-		[TestMethod]
-		[ExpectedException(typeof(Exception))]
-		public void testExpectedValuesNotReturned_ListOfHorseBets()
-		{
-			HistoricDataReader myReader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\BadDataTestFile.txt");
-			List<HorseBet> mybets = myReader.ListOfHistoricHorseBetsOriginal();
+		//[TestMethod]
+		//[ExpectedException(typeof(Exception))]
+		//public void testExpectedValuesNotReturned_ListOfHorseBets()
+		//{
+		//	HistoricDataReader myReader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\BadDataTestFile.txt");
+		//	List<HorseBet> mybets = myReader.ListOfHistoricHorseBetsOriginal();
 				
-		}
+		//}
 	}
 }

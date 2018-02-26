@@ -22,7 +22,7 @@ namespace TestHotTipster
 		[TestMethod]
 		public void testFileExistsValidFilePath()
 		{
-			string filepath = @"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt";
+			string filepath = @"C:\Users\carra\Documents\HotTipster\BadDataTestFile.txt";
 			bool result = MyUtilities.ValidFilePath(filepath);
 			Assert.IsTrue(result);
 		}
