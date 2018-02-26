@@ -27,7 +27,7 @@ namespace HotTipster
 
 		public List<string> ExistingRaceCourseNames()
 		{
-			HistoricDataReader myReader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
+			HistoricDataReader myReader = new HistoricDataReader();// @"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
 			List<HorseBet> historicBets = myReader.ListOfHistoricHorseBetsOriginal();
 			var groupednames = historicBets.GroupBy(x => x.RaceCourseName);
 			List<string> names = new List<string>();

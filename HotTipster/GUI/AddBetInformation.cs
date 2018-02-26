@@ -19,8 +19,7 @@ namespace HotTipster.GUI
 		{
 			InitializeComponent();
 			cboRaceCourses.DataSource = HorseBet.ListOfRaceCourseNamesForAddBetComboBox();
-			dtpRaceDate.Value = DateTime.Today;
-			
+			dtpRaceDate.Value = DateTime.Today;			
 			
 		}
 
@@ -40,7 +39,7 @@ namespace HotTipster.GUI
 			}
 
 			List<RaceCourse> rcList = new List<RaceCourse>();
-			rcList = dbaccess.RetrieveRaceCourseNamesFromDB();
+			rcList = ReadWriteToSQLite.RetrieveRaceCourseNamesFromDB();
 			var id = (from rc in rcList
 					  where rc.RaceCourseName == racecourseName
 					  select rc.RaceCourseID).ToArray();

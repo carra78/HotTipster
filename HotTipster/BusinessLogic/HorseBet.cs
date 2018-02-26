@@ -41,9 +41,9 @@ namespace HotTipster
 		
 		public static List<HorseBet> AddCourseIDToHistoricBetData()
 		{
-			ReadWriteToSQLite writer = new ReadWriteToSQLite();
-			HistoricDataReader reader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
-			List<RaceCourse> rcList = writer.RetrieveRaceCourseNamesFromDB();
+			//ReadWriteToSQLite writer = new ReadWriteToSQLite();
+			HistoricDataReader reader = new HistoricDataReader();//@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
+			List<RaceCourse> rcList = ReadWriteToSQLite.RetrieveRaceCourseNamesFromDB();
 			List<HorseBet> historicBets = reader.ListOfHistoricHorseBetsOriginal();
 			foreach (var bet in historicBets)
 			{
@@ -57,11 +57,26 @@ namespace HotTipster
 
 		}
 
+		public static List<HorseBet> AddCoursenNameToRetrievedHorseBetData(List<HorseBet> bets)
+		{
+			List<RaceCourse> rcList = ReadWriteToSQLite.RetrieveRaceCourseNamesFromDB();
+			foreach (var bet in bets)
+			{
+				var id = (from rc in rcList
+						  where rc.RaceCourseID == bet.CourseID
+						  select rc.RaceCourseName).ToArray();
+				bet.RaceCourseName = id[0];
+			}
+
+			return bets;
+
+		}
+
 		public static List<string> ListOfRaceCourseNamesForAddBetComboBox()
 		{
 			//no unit test - rely on test for retrieve racecourse list from DB and observation of result in combo box
-			ReadWriteToSQLite reader = new ReadWriteToSQLite();
-			List<RaceCourse> rcList = reader.RetrieveRaceCourseNamesFromDB();
+			//ReadWriteToSQLite reader = new ReadWriteToSQLite();
+			List<RaceCourse> rcList = ReadWriteToSQLite.RetrieveRaceCourseNamesFromDB();
 			var comboList = (from rc in rcList
 							 select rc.RaceCourseName).ToList();
 

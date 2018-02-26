@@ -18,12 +18,13 @@ namespace HotTipster.GUI
 		{
 			InitializeComponent();
 			ReadWriteToSQLite sqldb = new ReadWriteToSQLite();
-			HistoricDataReader reader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt"); //Replace with directory ref?
+			HistoricDataReader reader = new HistoricDataReader();// @"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt"); //Replace with directory ref?
 			if (!File.Exists(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "HotTipster.db"))
 			{
 				sqldb.CreateDatabase();
 				sqldb.InsertExistingRaceCoursesIntoDB();
-				sqldb.InsertListOfBets(reader.ListOfHistoricHorseBetsOriginal());
+				//sqldb.InsertListOfBets(reader.ListOfHistoricHorseBetsOriginal());
+				sqldb.InsertListOfBets(HorseBet.AddCourseIDToHistoricBetData());
 			}
 		}
 

@@ -73,6 +73,7 @@
     <Compile Include="BusinessLogic\HorseBet.cs" />
     <Compile Include="DataAccess\HistoricDataReader.cs" />
     <Compile Include="DataAccess\IDataWriter.cs" />
+    <Compile Include="DataAccess\ReportMethods.cs" />
     <Compile Include="DataAccess\WriteToCSV.cs" />
     <Compile Include="DataAccess\ReadWriteToSQLite.cs" />
     <Compile Include="GUI\AddBetInformation.cs">
@@ -146,6 +147,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HistoricData.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

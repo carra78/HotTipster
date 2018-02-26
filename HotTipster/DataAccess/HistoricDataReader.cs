@@ -6,29 +6,23 @@ using System.Threading.Tasks;
 using HotTipster.Utilities;
 using System.IO;
 
+
 namespace HotTipster.DataAccess
 {
 	public class HistoricDataReader
 	{
 		//local variables
 		private string[] stringSplitCommaSeparator = { "," };
+		string filepath = @"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt";
 
 		//Properties
-		public string FilePath { get; set; }
+		//public string FilePath { get; set; }
 		
 
 		//Constructors
-		public HistoricDataReader(string filepath = "")
+		
+		public HistoricDataReader()
 		{
-			if (MyUtilities.ValidFilePath(filepath))
-			{
-				FilePath = filepath;
-			}
-			else
-			{
-				throw new Exception("Invalid file name");
-			}
-			
 		}
 
 
@@ -38,7 +32,7 @@ namespace HotTipster.DataAccess
 			var result = new List<HorseBet>();
 			try
 			{
-				using (FileStream fs = File.OpenRead(FilePath))
+				using (FileStream fs = File.OpenRead(filepath))
 				using (TextReader myreader = new StreamReader(fs, Encoding.UTF8))
 				{
 					while (myreader.Peek() > -1)

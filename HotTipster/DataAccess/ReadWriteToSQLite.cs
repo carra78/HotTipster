@@ -16,9 +16,9 @@ namespace HotTipster.DataAccess
 {
 	public class ReadWriteToSQLite : IDataWriter
 	{
-		private static string databaseName = "HotTipster.db";
-		private SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
-		private HistoricDataReader reader = new HistoricDataReader(@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
+		static string databaseName = "HotTipster.db";
+		static SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
+		private HistoricDataReader reader = new HistoricDataReader();//@"C:\Users\carra\Documents\HotTipster\HotTipsHistoricData.txt");
 		private List<HorseBet> originalBets = new List<HorseBet>();
 
 
@@ -30,7 +30,7 @@ namespace HotTipster.DataAccess
 		public bool OutputFileExists()
 		{
 
-			return MyUtilities.ValidFilePath(Directory.GetCurrentDirectory() + Path.PathSeparator + databaseName);
+			return MyUtilities.ValidFilePath(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + databaseName);
 		}
 
 		public void CreateDatabase()
@@ -51,21 +51,18 @@ namespace HotTipster.DataAccess
 					"BetResult text NOT NULL," +
 					"BetAmount real NOT NULL)";				
 
-				//SqliteCommand cmdHorsesTable = new SqliteCommand(createHorsesTable, dbConnection);
 				SqliteCommand cmdCoursesTable = new SqliteCommand(createRaceCoursesTable, dbConnection);
 				SqliteCommand cmdHorseBetsTable = new SqliteCommand(createHorseBetsTable, dbConnection);
 
 				try
 				{
 					dbConnection.Open();
-					//cmdHorsesTable.ExecuteNonQuery();
 					cmdCoursesTable.ExecuteNonQuery();
 					cmdHorseBetsTable.ExecuteNonQuery();
 					
 				}
 				catch (Exception)
 				{
-
 					throw;
 				}
 			}
@@ -101,7 +98,6 @@ namespace HotTipster.DataAccess
 
 		public void InsertNewRaceCourse(string racecourseName) 
 		{
-			//Not Tested - check that list of RC count increased by one if used
 			using (dbConnection)
 			{
 				string insertExistingRaceCourseName = "INSERT INTO Racecourses(RaceCourseName) VALUES (@courseName);";
@@ -130,7 +126,7 @@ namespace HotTipster.DataAccess
 			}
 		}
 
-		public List<RaceCourse> RetrieveRaceCourseNamesFromDB()
+		public static List<RaceCourse> RetrieveRaceCourseNamesFromDB()
 		{
 			string query = "SELECT RaceCourseID, RaceCourseName FROM Racecourses";
 			SqliteCommand cmdselectCourseNames = new SqliteCommand(query, dbConnection);
@@ -224,10 +220,10 @@ namespace HotTipster.DataAccess
 			}
 		}
 
-		public List<HorseBet> RetrieveHorseBetsFromDB()//add parameters? Apply filtering in code using linq instead?
+		public static List<HorseBet> RetrieveHorseBetsFromDB()//add parameters? Apply filtering in code using linq instead?
 		{
 			//SqliteConnection dbConnection = new SqliteConnection("Filename=HotTipster.db");
-			string select = "SELECT RaceCourseID, RaceDate, BetResult, BetAmount FROM Horsebets";
+			string select = "SELECT HorseBetID, RaceCourseID, RaceDate, BetResult, BetAmount FROM Horsebets";
 			SqliteCommand selectBets = new SqliteCommand(select, dbConnection);
 			List<HorseBet> retrievedBet = new List<HorseBet>();
 			using (dbConnection)
@@ -237,11 +233,13 @@ namespace HotTipster.DataAccess
 				while (reader.Read())
 				{
 					HorseBet hb = new HorseBet();
-					hb.CourseID = reader.GetInt32(0);
-					hb.RaceDate = DateTime.Parse(reader.GetString(1));
+					hb.BetID = reader.GetInt32(0);
+					hb.CourseID = reader.GetInt32(1);
+					//hb.CourseID = int.Parse(reader.GetString(0));
+					hb.RaceDate = DateTime.Parse(reader.GetString(2));
 					//hb.HorseID = reader.GetInt32(2);
-					hb.BetResult = bool.Parse(reader.GetString(2));
-					hb.BetAmount = decimal.Parse(reader.GetString(3));
+					hb.BetResult = bool.Parse(reader.GetString(3));
+					hb.BetAmount = decimal.Parse(reader.GetString(4));
 					retrievedBet.Add(hb);
 				}
 			}
